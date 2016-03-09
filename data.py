@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-"""data_keepall.py: A ccData object that doesn't reject or filter for
+"""data.py: A ccData object that doesn't reject or filter for
 invalid or empty attributes.
 
 This allows for writing parsers that can parse/store/return arbitrary
