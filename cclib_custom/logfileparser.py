@@ -17,8 +17,8 @@ class LogfileKeepall(Logfile):
     """Abstract class for logfile objects.
 
     Subclasses defined by cclib:
-        ADF, DALTON, GAMESS, GAMESSUK, Gaussian, Jaguar, Molpro, NWChem, ORCA,
-          Psi, QChem
+        ADF, DALTON, GAMESS, GAMESSUK, Gaussian, Jaguar, Molpro, MOPAC, NWChem,
+          ORCA, Psi, QChem
 
     This abstract Logfile doesn't delete any attributes.
     """
