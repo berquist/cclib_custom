@@ -1,35 +1,22 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-
-from __future__ import print_function
-from __future__ import division
-
 import numpy as np
-np_formatter = {
-    'float_kind': lambda x: '{:14.8f}'.format(x)
-}
+
+np_formatter = {"float_kind": lambda x: "{:14.8f}".format(x)}
 np.set_printoptions(linewidth=240, formatter=np_formatter)
 
-import cclib
-from cclib.io import ccopen
 from cclib.parser.qchemparser import QChem
 
-from cclib_custom import ccDataKeepall
-from cclib_custom import LogfileKeepall
+from cclib_custom import ccDataKeepall, LogfileKeepall
 
 
 class QChemFock(QChem, LogfileKeepall):
-
     def __init__(self, *args, **kwargs):
-        # Call the __init__ method of the superclass
-        super(QChemFock, self).__init__(datatype=ccDataKeepall, future=True, *args, **kwargs)
+        super().__init__(datatype=ccDataKeepall, future=True, *args, **kwargs)
 
     def extract(self, inputfile, line):
-
-        super(QChemFock, self).extract(inputfile, line)
+        super().extract(inputfile, line)
 
         # aooverlaps
-        if line.strip() == 'Overlap Matrix':
+        if line.strip() == "Overlap Matrix":
             self.aooverlaps = QChem.parse_matrix(inputfile, self.nbasis, self.nbasis, 6)
 
         # if 'Final Alpha MO Eigenvalues' in line:
@@ -42,34 +29,23 @@ class QChemFock(QChem, LogfileKeepall):
         #     moenergies = QChem.parse_matrix(inputfile, 1, self.nbasis, 6)
         #     self.moenergies.append(moenergies)
 
-        if 'Final Alpha Fock Matrix' in line:
+        if "Final Alpha Fock Matrix" in line:
             fockmat = QChem.parse_matrix(inputfile, self.nbasis, self.nbasis, 4)
-            if not hasattr(self, 'fockao'):
+            if not hasattr(self, "fockao"):
                 self.fockao = []
             self.fockao.append(fockmat)
 
-        if 'Final Beta Fock Matrix' in line:
+        if "Final Beta Fock Matrix" in line:
             fockmat = QChem.parse_matrix(inputfile, self.nbasis, self.nbasis, 4)
             self.fockao.append(fockmat)
 
 
-def getargs():
-    """Get command-line arguments."""
-
+if __name__ == "__main__":
     import argparse
 
     parser = argparse.ArgumentParser()
-
-    parser.add_argument('outputfilename', nargs='+')
-
+    parser.add_argument("outputfilename", nargs="+")
     args = parser.parse_args()
-
-    return args
-
-
-if __name__ == '__main__':
-
-    args = getargs()
 
     for outputfilename in args.outputfilename:
 
