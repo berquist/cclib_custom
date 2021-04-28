@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 """data.py: A ccData object that doesn't reject or filter for
 invalid or empty attributes.
 

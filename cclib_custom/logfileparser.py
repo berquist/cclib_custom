@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 """logfileparser.py: Generic output file parser and related tools.
 
 The abstract Logfile here doesn't delete any attributes.
@@ -10,7 +8,7 @@ import sys
 
 from cclib.parser.logfileparser import Logfile
 
-from . import ccDataKeepall
+from cclib_custom.data import ccDataKeepall
 
 
 class LogfileKeepall(Logfile):
