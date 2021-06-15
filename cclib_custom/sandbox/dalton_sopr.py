@@ -7,12 +7,10 @@ import numpy as np
 
 from cclib.parser.daltonparser import DALTON
 
-from cclib_custom import ccDataKeepall
-from cclib_custom import LogfileKeepall
+from cclib_custom import ccDataKeepall, LogfileKeepall
+from cclib_custom.sandbox.utils_dalton import dalton_parse_line, parse_element_dalton
 
-from extract_nmr import dalton_parse_line
-
-from parse_matrices_dalton import parse_matrix_dalton, parse_element_dalton
+from parse_matrices_dalton import parse_matrix_dalton
 
 
 proplist_angmom = (
