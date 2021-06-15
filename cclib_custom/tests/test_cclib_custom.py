@@ -7,6 +7,7 @@ import cclib_custom
 import pytest
 import sys
 
+
 def test_cclib_custom_imported():
     """Sample test, will always pass so long as import statement worked"""
     assert "cclib_custom" in sys.modules
