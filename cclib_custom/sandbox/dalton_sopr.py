@@ -125,8 +125,7 @@ def sparse_to_dense_matrix_dalton(spmat, dim1, dim2, antisymmetric=False, mocoef
 class DALTONExt(DALTON, LogfileKeepall):
 
     def __init__(self, *args, **kwargs):
-        # Call the __init__ method of the superclass
-        super(DALTONExt, self).__init__(datatype=ccDataKeepall, future=True, *args, **kwargs)
+        super().__init__(datatype=ccDataKeepall, future=True, *args, **kwargs)
 
         ## Put things in the constructor that are static so we aren't
         ## forced to rewrite the before parsing/after parsing methods.
@@ -515,7 +514,7 @@ class DALTONExt(DALTON, LogfileKeepall):
         # regular parsed attributes for free!
         # Placed all the way at the bottom so we avoid lack of features
         # in the superclass.
-        super(DALTONExt, self).extract(inputfile, line)
+        super().extract(inputfile, line)
 
     def _proparr_angecc(self):
         if hasattr(self, 'propdict_lr'):

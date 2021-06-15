@@ -19,11 +19,10 @@ from cclib_custom import LogfileKeepall
 class QChemPolar(QChem, LogfileKeepall):
 
     def __init__(self, *args, **kwargs):
-        super(QChemPolar, self).__init__(datatype=ccDataKeepall, future=True, *args, **kwargs)
+        super().__init__(datatype=ccDataKeepall, future=True, *args, **kwargs)
 
     def extract(self, inputfile, line):
-
-        super(QChemPolar, self).extract(inputfile, line)
+        super().extract(inputfile, line)
 
         # Static polarizability from responseman/libresponse.
         if line.strip() == 'Calculating the static polarizability using libresponse.':

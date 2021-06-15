@@ -58,13 +58,11 @@ def g_tensor_populate_eigvals(d):
 
 
 class CFOURNMR(LogfileKeepall):
-
     def __init__(self, *args, **kwargs):
-        # Call the __init__ method of the superclass
-        super(CFOURNMR, self).__init__(datatype=ccDataKeepall, future=True, *args, **kwargs)
+        super().__init__(datatype=ccDataKeepall, future=True, *args, **kwargs)
 
     def extract(self, inputfile, line):
-        # super(CFOURNMR, self).extract(inputfile, line)
+        # no super call, since a CFOUR parser doesn't exist yet
 
         if 'SCF has converged.' in line:
             if not hasattr(self, 'scfenergies'):
@@ -108,13 +106,11 @@ class CFOURNMR(LogfileKeepall):
 
 
 class DALTONNMR(DALTON, LogfileKeepall):
-
     def __init__(self, *args, **kwargs):
-        # Call the __init__ method of the superclass
-        super(DALTONNMR, self).__init__(datatype=ccDataKeepall, future=True, *args, **kwargs)
+        super().__init__(datatype=ccDataKeepall, future=True, *args, **kwargs)
 
     def extract(self, inputfile, line):
-        super(DALTONNMR, self).extract(inputfile, line)
+        super().extract(inputfile, line)
 
         if 'ABACUS - CHEMICAL SHIELDINGS' in line:
             self.nmr_shielding_tensors = []
@@ -297,13 +293,11 @@ class DALTONNMR(DALTON, LogfileKeepall):
 
 
 class GaussianNMR(Gaussian, LogfileKeepall):
-
     def __init__(self, *args, **kwargs):
-        # Call the __init__ method of the superclass
-        super(GaussianNMR, self).__init__(datatype=ccDataKeepall, future=True, *args, **kwargs)
+        super().__init__(datatype=ccDataKeepall, future=True, *args, **kwargs)
 
     def extract(self, inputfile, line):
-        super(GaussianNMR, self).extract(inputfile, line)
+        super().extract(inputfile, line)
 
         if 'SCF GIAO Magnetic shielding tensor (ppm):' in line:
             self.nmr_shielding_tensors = []
@@ -398,13 +392,11 @@ class GaussianNMR(Gaussian, LogfileKeepall):
 
 
 class NWChemNMR(NWChem, LogfileKeepall):
-
     def __init__(self, *args, **kwargs):
-        # Call the __init__ method of the superclass
-        super(NWChemNMR, self).__init__(datatype=ccDataKeepall, future=True, *args, **kwargs)
+        super().__init__(datatype=ccDataKeepall, future=True, *args, **kwargs)
 
     def extract(self, inputfile, line):
-        super(NWChemNMR, self).extract(inputfile, line)
+        super().extract(inputfile, line)
 
         if 'Chemical Shielding Tensors (GIAO, in ppm)' in line:
 
@@ -426,13 +418,11 @@ class NWChemNMR(NWChem, LogfileKeepall):
 
 
 class ORCANMR(ORCA, LogfileKeepall):
-
     def __init__(self, *args, **kwargs):
-        # Call the __init__ method of the superclass
-        super(ORCANMR, self).__init__(datatype=ccDataKeepall, future=True, *args, **kwargs)
+        super().__init__(datatype=ccDataKeepall, future=True, *args, **kwargs)
 
     def extract(self, inputfile, line):
-        super(ORCANMR, self).extract(inputfile, line)
+        super().extract(inputfile, line)
 
         if 'CHEMICAL SHIFTS' in line:
 
@@ -555,14 +545,11 @@ class ORCANMR(ORCA, LogfileKeepall):
 
 
 class QChemNMR(QChem, LogfileKeepall):
-
     def __init__(self, *args, **kwargs):
-        # Call the __init__ method of the superclass
-        super(QChemNMR, self).__init__(datatype=ccDataKeepall, future=True, *args, **kwargs)
+        super().__init__(datatype=ccDataKeepall, future=True, *args, **kwargs)
 
     def extract(self, inputfile, line):
-
-        super(QChemNMR, self).extract(inputfile, line)
+        super().extract(inputfile, line)
 
         if 'Final Alpha Fock Matrix' in line:
             fockmat = np.empty(shape=(self.nbasis, self.nbasis))

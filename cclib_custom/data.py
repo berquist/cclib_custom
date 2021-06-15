@@ -10,10 +10,8 @@ from cclib.parser import ccData
 
 
 class ccDataKeepall(ccData):
-
     def __init__(self, *args, **kwargs):
-        # Call the __init__ method of the superclass
-        super(ccDataKeepall, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
     def setattributes(self, attributes):
         """Sets data attributes given in a dictionary.

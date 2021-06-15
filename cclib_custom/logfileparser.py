@@ -21,8 +21,16 @@ class LogfileKeepall(Logfile):
     This abstract Logfile doesn't delete any attributes.
     """
 
-    def __init__(self, source, loglevel=logging.INFO, logname="Log",
-                 logstream=sys.stdout, datatype=ccDataKeepall, **kwds):
-        # Call the __init__ method of the superclass
-        super(LogfileKeepall, self).__init__(source, loglevel, logname,
-                                             logstream, datatype, **kwds)
+    def __init__(
+        self,
+        source,
+        loglevel=logging.INFO,
+        logname="Log",
+        logstream=sys.stdout,
+        datatype=ccDataKeepall,
+        **kwds
+    ):
+        super().__init__(source, loglevel, logname, logstream, datatype, **kwds)
+        # Prevent `optdone_as_list` from overriding the ccData type, while
+        # still allowing the use of the `future` keyword
+        self.datatype = datatype
