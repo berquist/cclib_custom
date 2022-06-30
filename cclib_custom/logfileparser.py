@@ -14,11 +14,8 @@ from cclib.parser.logfileparser import Logfile
 class LogfileKeepall(Logfile):
     """Abstract class for logfile objects.
 
-    Subclasses defined by cclib:
-        ADF, DALTON, GAMESS, GAMESSUK, Gaussian, Jaguar, Molpro, MOPAC, NWChem,
-          ORCA, Psi, QChem
-
-    This abstract Logfile doesn't delete any attributes.
+    Unlike cclib.parser.logfileparser.Logfile, this abstract Logfile doesn't
+    delete any attributes.
     """
 
     def __init__(
