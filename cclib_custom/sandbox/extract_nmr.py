@@ -1,7 +1,6 @@
 from cclib_custom import LogfileKeepall, ccDataKeepall
 from cclib_custom.sandbox.utils_dalton import dalton_parse_line, parse_element_dalton
 
-import cclib
 import numpy as np
 from cclib.io import ccopen
 from cclib.parser.daltonparser import DALTON

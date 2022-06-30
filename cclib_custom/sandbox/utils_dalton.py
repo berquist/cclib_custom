@@ -22,7 +22,7 @@ def parse_element_dalton(element):
     """
 
     if any(x in element for x in ["e", "E", "d", "D"]):
-        match = [(p, q) for (p, q) in RE_ELEMENT.findall(element) if p is not "" if q is not ""][0]
+        match = [(p, q) for (p, q) in RE_ELEMENT.findall(element) if p != "" if q != ""][0]
         return float("e".join(match))
     return float(element)
 

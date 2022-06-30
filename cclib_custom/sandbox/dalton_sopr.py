@@ -124,8 +124,8 @@ class DALTONExt(DALTON, LogfileKeepall):
     def __init__(self, *args, **kwargs):
         super().__init__(datatype=ccDataKeepall, future=True, *args, **kwargs)
 
-        ## Put things in the constructor that are static so we aren't
-        ## forced to rewrite the before parsing/after parsing methods.
+        # Put things in the constructor that are static so we aren't
+        # forced to rewrite the before parsing/after parsing methods.
 
         # This is how DALTON prints true/false values.
         self.boolmap = {"T": True, "F": False}
@@ -163,7 +163,7 @@ class DALTONExt(DALTON, LogfileKeepall):
             "ANGECC",
             "OZKE",
             "PSOKE",
-            "B[XYZ]\sEF\s[XYZ]",
+            r"B[XYZ]\sEF\s[XYZ]",
             "DERAM",
             "DIPANH",
         )
@@ -647,7 +647,7 @@ def orbdia(UDV, FOCK, FC, FV, norb, nclosed, nact, nvirt, AVDIA=False):
             )
             if AVDIA:
                 eodia[m, i] += UDV[m, m] * FV[i, i]
-            sodia[m, i] += 2 - UDV[M, M]
+            sodia[m, i] += 2 - UDV[m, m]
         for n in r_active:
             eodia[m, n] += UDV[n, n] * FC[m, m] + UDV[m, m] * FC[n, n] - FOCK[m, m] - FOCK[n, n]
             if AVDIA:
