@@ -20,7 +20,6 @@ sys.path.insert(0, os.path.abspath(".."))
 
 import cclib_custom
 
-
 # -- Project information -----------------------------------------------------
 
 project = "cclib_custom"

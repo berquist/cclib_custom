@@ -1,6 +1,6 @@
-from cclib.parser.qchemparser import QChem
+from cclib_custom import LogfileKeepall, ccDataKeepall
 
-from cclib_custom import ccDataKeepall, LogfileKeepall
+from cclib.parser.qchemparser import QChem
 
 
 class QChemALMOCIS(QChem, LogfileKeepall):

@@ -3,8 +3,10 @@ cclib_custom
 Customized quantum chemistry parsers for arbitrary attributes, built on top of cclib
 """
 import sys
-from setuptools import setup, find_packages
+
 import versioneer
+
+from setuptools import find_packages, setup
 
 short_description = __doc__.split("\n")
 

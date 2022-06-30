@@ -2,7 +2,6 @@ import re
 
 import numpy as np
 
-
 RE_ELEMENT = re.compile(r"([+-]?[0-9]*\.?[0-9]*|[+-]?\.[0-9]+)[EeDd]?([+-]?[0-9]+)?")
 
 

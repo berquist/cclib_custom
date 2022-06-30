@@ -6,9 +6,9 @@ The abstract Logfile here doesn't delete any attributes.
 import logging
 import sys
 
-from cclib.parser.logfileparser import Logfile
-
 from cclib_custom.data import ccDataKeepall
+
+from cclib.parser.logfileparser import Logfile
 
 
 class LogfileKeepall(Logfile):
@@ -28,7 +28,7 @@ class LogfileKeepall(Logfile):
         logname="Log",
         logstream=sys.stdout,
         datatype=ccDataKeepall,
-        **kwds
+        **kwds,
     ):
         super().__init__(source, loglevel, logname, logstream, datatype, **kwds)
         # Prevent `optdone_as_list` from overriding the ccData type, while

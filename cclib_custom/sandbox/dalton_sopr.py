@@ -3,17 +3,16 @@ DALTON calculations.
 """
 
 import re
-import numpy as np
 
-from cclib.parser.daltonparser import DALTON
-
-from cclib_custom import ccDataKeepall, LogfileKeepall
+from cclib_custom import LogfileKeepall, ccDataKeepall
 from cclib_custom.sandbox.utils_dalton import (
     dalton_parse_line,
     parse_element_dalton,
     parse_matrix_dalton,
 )
 
+import numpy as np
+from cclib.parser.daltonparser import DALTON
 
 proplist_angmom = (
     "XANGMOM",

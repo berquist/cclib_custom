@@ -1,17 +1,15 @@
-import numpy as np
+from cclib_custom import LogfileKeepall, ccDataKeepall
+from cclib_custom.sandbox.utils_dalton import dalton_parse_line, parse_element_dalton
 
 import cclib
+import numpy as np
 from cclib.io import ccopen
-from cclib.parser.utils import convertor
-
 from cclib.parser.daltonparser import DALTON
 from cclib.parser.gaussianparser import Gaussian
 from cclib.parser.nwchemparser import NWChem
 from cclib.parser.orcaparser import ORCA
 from cclib.parser.qchemparser import QChem
-
-from cclib_custom import ccDataKeepall, LogfileKeepall
-from cclib_custom.sandbox.utils_dalton import dalton_parse_line, parse_element_dalton
+from cclib.parser.utils import convertor
 
 
 def g_eigvals(g_matrix):

@@ -9,13 +9,11 @@ formatter = {
 }
 np.set_printoptions(linewidth=200, formatter=formatter)
 
+from cclib_custom import LogfileKeepall, ccDataKeepall
+
 import pandas as pd
-
 from cclib.io import ccopen
-
 from cclib.parser.qchemparser import QChem
-from cclib_custom import ccDataKeepall
-from cclib_custom import LogfileKeepall
 
 
 class QChemPolar(QChem, LogfileKeepall):

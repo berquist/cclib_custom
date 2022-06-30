@@ -3,9 +3,9 @@ import numpy as np
 np_formatter = {"float_kind": lambda x: "{:14.8f}".format(x)}
 np.set_printoptions(linewidth=240, formatter=np_formatter)
 
-from cclib.parser.qchemparser import QChem
+from cclib_custom import LogfileKeepall, ccDataKeepall
 
-from cclib_custom import ccDataKeepall, LogfileKeepall
+from cclib.parser.qchemparser import QChem
 
 
 class QChemFock(QChem, LogfileKeepall):
