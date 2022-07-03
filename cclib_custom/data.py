@@ -29,8 +29,8 @@ class ccDataKeepall(ccData):
         if type(attributes) is not dict:
             raise TypeError("attributes must be in a dictionary")
 
-        ## We keep all attributes, with no distinction between
-        ## valid/invalid/empty.
+        # We keep all attributes, with no distinction between
+        # valid/invalid/empty.
 
         # valid = [a for a in attributes if a in self._attrlist]
         # invalid = [a for a in attributes if a not in self._attrlist]
