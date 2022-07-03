@@ -35,7 +35,7 @@ repos:
     hooks:
       - id: mypy
         args: []
-  - repo: https://github.com/sirosen/check-jsonschema
+  - repo: https://github.com/python-jsonschema/check-jsonschema
     rev: "0.16.2"
     hooks:
       - id: check-github-workflows
