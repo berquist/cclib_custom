@@ -19,10 +19,22 @@ warn_unused_configs = true
 
 [[tool.mypy.overrides]]
 module = [
+    "cclib.io",
+    "cclib.parser",
+    "cclib.parser.daltonparser",
+    "cclib.parser.gaussianparser",
+    "cclib.parser.logfileparser",
+    "cclib.parser.nwchemparser",
+    "cclib.parser.orcaparser",
+    "cclib.parser.qchemparser",
+    "cclib.parser.utils",
     "psi4",
     "pyscf",
-    "pytest",
     "scipy",
+    # these are all from versioneer
+    "cx_Freeze.dist",
+    "py2exe.build_exe",
+    "py2exe.distutils_buildexe",
 ]
 ignore_missing_imports = true
 

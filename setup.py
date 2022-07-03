@@ -10,7 +10,6 @@ from setuptools import find_packages, setup
 
 short_description = __doc__.split("\n")
 
-# from https://github.com/pytest-dev/pytest-runner#conditional-requirement
 needs_pytest = {"pytest", "test", "ptr"}.intersection(sys.argv)
 pytest_runner = ["pytest-runner"] if needs_pytest else []
 
@@ -19,7 +18,6 @@ with open("README.md") as handle:
 
 
 setup(
-    # Self-descriptive entries which should always be present
     name="cclib_custom",
     author="Eric Berquist",
     author_email="eric.berquist@gmail.com",
@@ -38,14 +36,9 @@ setup(
     # Comment out this line to prevent the files from being packaged with your software
     include_package_data=True,
     # Allows `setup.py test` to work correctly with pytest
-    setup_requires=[] + pytest_runner,
-    # Additional entries you may want simply uncomment the lines you want and fill in the data
-    # url='http://www.my_package.com',  # Website
-    # Required packages, pulls from pip if needed; do not use for Conda deployment
+    setup_requires=[] + pytest_runner,  # type: ignore
     install_requires=["cclib"],
-    # platforms=['Linux',
-    #            'Mac OS-X',
-    #            'Unix',
-    #            'Windows'],            # Valid platforms your code works on, adjust to your flavor
-    # python_requires=">=3.5",          # Python version restrictions
+    python_requires=">=3.6",
+    # due to py.typed and mypy
+    zip_safe=False,
 )

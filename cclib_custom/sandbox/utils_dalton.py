@@ -1,11 +1,13 @@
 import re
+from typing import Dict
 
 import numpy as np
+import numpy.typing as npt
 
 RE_ELEMENT = re.compile(r"([+-]?[0-9]*\.?[0-9]*|[+-]?\.[0-9]+)[EeDd]?([+-]?[0-9]+)?")
 
 
-def parse_element_dalton(element):
+def parse_element_dalton(element: str) -> float:
     """Given a number that might appear in a DALTON output, especially one
     printed in a matrix, convert it to a float.
 
@@ -27,7 +29,7 @@ def parse_element_dalton(element):
     return float(element)
 
 
-def dalton_parse_line(line):
+def dalton_parse_line(line: str) -> npt.NDArray[np.float_]:
     """Unpack a '@G' line from a DALTON output into a matrix."""
 
     # each field is 7 characters long
@@ -35,12 +37,10 @@ def dalton_parse_line(line):
     xy, yx, xz = line[30:37], line[37:44], line[44:51]
     zx, yz, zy = line[51:58], line[58:65], line[65:72]
 
-    arr = np.array([[xx, xy, xz], [yx, yy, yz], [zx, zy, zz]], dtype=float)
-
-    return arr
+    return np.array([[xx, xy, xz], [yx, yy, yz], [zx, zy, zz]], dtype=float)
 
 
-def parse_matrix_dalton(outputfile):
+def parse_matrix_dalton(outputfile) -> Dict[int, Dict[int, float]]:
     """Parse a matrix from a DALTON output file. `outputfile` is the file
     object being read from.
 
@@ -64,11 +64,12 @@ def parse_matrix_dalton(outputfile):
         keys are single indices into non-zero matrix elements.
     """
 
-    spmat = dict()
+    spmat: Dict[int, Dict[int, float]] = dict()
 
     line = ""
     while "Column" not in line:
         line = next(outputfile)
+    colindices = list()
     while "==== End of matrix output ====" not in line:
         chomp = line.split()
         if chomp == []:

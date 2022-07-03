@@ -3,7 +3,7 @@ import numpy as np
 formatter = {
     "float_kind": lambda x: "{:8.4f}".format(x),
 }
-np.set_printoptions(linewidth=200, formatter=formatter)
+np.set_printoptions(linewidth=200, formatter=formatter)  # type: ignore
 
 from cclib_custom import LogfileKeepall, ccDataKeepall
 

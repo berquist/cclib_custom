@@ -14,7 +14,7 @@ try:
     loader = yaml.load
 except ImportError:
     try:
-        import ruamel_yaml as yaml  # Ruamel YAML
+        import ruamel_yaml as yaml  # type: ignore # Ruamel YAML
     except ImportError:
         try:
             # Load Ruamel YAML from the base conda environment
@@ -35,7 +35,7 @@ except ImportError:
             # Based on importlib example, but only needs to load_module since its the whole package, not just
             # a module
             spec = import_util.spec_from_file_location("ruamel_yaml", ruamel_yaml_path)
-            yaml = spec.loader.load_module()
+            yaml = spec.loader.load_module()  # type: ignore
         except (KeyError, ImportError, IndexError):
             raise ImportError(
                 "No YAML parser could be found in this or the conda environment. "
@@ -43,7 +43,8 @@ except ImportError:
                 "AND could not find Ruamel YAML in the base conda environment through CONDA_EXE path. "
                 "Environment not created!"
             )
-    loader = yaml.YAML(typ="safe").load  # typ="safe" avoids odd typing on output
+    # type: ignore
+    loader = yaml.YAML(typ="safe").load  # type: ignore # typ="safe" avoids odd typing on output
 
 
 @contextmanager
@@ -72,7 +73,7 @@ args = parser.parse_args()
 
 # Open the base file
 with open(args.conda_file, "r") as handle:
-    yaml_script = loader(handle.read())
+    yaml_script = loader(handle.read())  # type: ignore
 
 python_replacement_string = "python {}*".format(args.python)
 
@@ -94,7 +95,7 @@ finally:
 if "CONDA_EXE" in os.environ:
     conda_path = os.environ["CONDA_EXE"]
 else:
-    conda_path = shutil.which("conda")
+    conda_path = shutil.which("conda")  # type: ignore
 if conda_path is None:
     raise RuntimeError(
         "Could not find a conda binary in CONDA_EXE variable or in executable search path"

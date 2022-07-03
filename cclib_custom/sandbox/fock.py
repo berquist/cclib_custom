@@ -1,7 +1,7 @@
 import numpy as np
 
 np_formatter = {"float_kind": lambda x: "{:14.8f}".format(x)}
-np.set_printoptions(linewidth=240, formatter=np_formatter)
+np.set_printoptions(linewidth=240, formatter=np_formatter)  # type: ignore
 
 from cclib_custom import LogfileKeepall, ccDataKeepall
 
