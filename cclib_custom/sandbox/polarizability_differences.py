@@ -1,7 +1,3 @@
-from __future__ import print_function
-
-from collections import OrderedDict
-
 import numpy as np
 
 formatter = {
@@ -11,8 +7,8 @@ np.set_printoptions(linewidth=200, formatter=formatter)
 
 from cclib_custom import LogfileKeepall, ccDataKeepall
 
-import pandas as pd
-from cclib.io import ccopen
+# import pandas as pd
+# from cclib.io import ccopen
 from cclib.parser.qchemparser import QChem
 
 
@@ -36,14 +32,13 @@ class QChemPolar(QChem, LogfileKeepall):
             self.polarizabilities.append(np.array(polarizability))
 
 
-def tensor_printer(tensor):
+def tensor_printer(tensor) -> None:
     assert len(tensor.shape) == 2
     assert tensor.shape[0] == tensor.shape[1]
     print(tensor)
     eigvals = np.linalg.eigvals(tensor)
     print(eigvals)
     print(np.average(eigvals))
-    return
 
 
 if __name__ == "__main__":

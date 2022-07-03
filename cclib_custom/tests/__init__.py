@@ -1,3 +1,3 @@
-"""
-Empty init file in case you choose a package besides PyTest such as Nose which may look for such a file
-"""
+from pathlib import Path
+
+_testdatadir = Path(__file__).resolve().parent / "data"
