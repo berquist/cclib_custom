@@ -1,10 +1,9 @@
 ---
+# yamllint disable rule:line-length
 name: CI
 
+# yamllint disable-line rule:truthy
 on:
-  # GitHub has started calling new repo's first branch "main" https://github.com/github/renaming
-  # Existing codes likely still have "master" as the primary branch
-  # Both are tracked here to keep legacy and new codes working
   push:
     branches:
       - "master"
@@ -13,64 +12,74 @@ on:
     branches:
       - "master"
       - "main"
-  schedule:
-    # Nightly tests run on master by default:
-    #   Scheduled workflows run on the latest commit on the default or base branch.
-    #   (from https://help.github.com/en/actions/reference/events-that-trigger-workflows#scheduled-events-schedule)
-    - cron: "0 0 * * *"
 
 jobs:
   test:
-    name: Test on ${{ matrix.os }}, Python ${{ matrix.python-version }}
+    name: Test ${{ matrix.os }} / Python ${{ matrix.python-version }} / ${{ matrix.env-type.env-type-name }}
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         os: [macOS-latest, ubuntu-latest, windows-latest]
-        python-version: [3.7, 3.8, 3.9]
-
+        python-version: [3.7, 3.8, 3.9, 3.10]
+        # yamllint disable rule:braces
+        env-type:
+          - { env-type-name: venv, shell: bash }
+          - { env-type-name: conda, shell: 'bash -l {0}' }
+          # yamllint enable rule:braces
+    defaults:
+      run:
+        shell: ${{ matrix.env-type.shell }}
     steps:
-    - uses: actions/checkout@v1
-
-    - name: Additional info about the build
-      shell: bash
-      run: |
-        uname -a
-        df -h
-        ulimit -a
-
-
-    # More info on options: https://github.com/conda-incubator/setup-miniconda
-    - uses: conda-incubator/setup-miniconda@v2
-      with:
-        python-version: ${{ matrix.python-version }}
-        environment-file: devtools/conda-envs/test_env.yaml
-
-        channels: conda-forge,defaults
-
-        activate-environment: test
-        auto-update-conda: false
-        auto-activate-base: false
-        show-channel-urls: true
-
-    - name: Install package
-
-      # conda setup requires this special shell
-      shell: bash -l {0}
-      run: |
-        python -m pip install .
-        conda list
-
-    - name: Run tests
-
-      # conda setup requires this special shell
-      shell: bash -l {0}
-
-      run: |
-        python -m pytest -v --cov=cclib_custom --cov-report=xml --color=yes cclib_custom/tests/
-
-    - name: CodeCov
-      uses: codecov/codecov-action@v1
-      with:
-        file: ./coverage.xml
-        flags: unittests
-        name: codecov-${{ matrix.os }}-py${{ matrix.python-version }}
+      - uses: actions/checkout@v2
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+        if: ${{ matrix.env-type.env-type-name == 'venv' }}
+      - name: Set up Python ${{ matrix.python-version }} with conda
+        uses: conda-incubator/setup-miniconda@v2
+        with:
+          activate-environment: test
+          auto-activate-base: false
+          auto-update-conda: true
+          # channels: conda-forge,defaults
+          # environment-file: devtools/conda-envs/test_env.yaml
+          miniforge-version: latest
+          python-version: ${{ matrix.python-version }}
+          show-channel-urls: true
+        if: ${{ matrix.env-type.env-type-name == 'conda' }}
+      - name: Update pip and setuptools
+        run: python -m pip install -U pip setuptools
+      - name: Print pip config
+        run: python -m pip config list
+      - name: Install package
+        run: |
+          python -m pip install .
+          PACKAGE_INSTALL_DIR=$(python -c 'import cclib_custom as _; print(_.__path__[0])')
+          find $PACKAGE_INSTALL_DIR -type f | sort
+      - name: Print Python environment
+        run: |
+          python -m pip list
+      - name: Print conda environment
+        run: conda list
+        if: ${{ matrix.env-type.env-type-name == 'conda' }}
+      - name: Print conda info
+        run: conda info
+        if: ${{ matrix.env-type.env-type-name == 'conda' }}
+      - name: Print conda config
+        run: conda config --show
+        if: ${{ matrix.env-type.env-type-name == 'conda' }}
+      - name: Run tests
+        run: |
+          PACKAGE_INSTALL_DIR=$(python -c 'import cclib_custom as _; print(_.__path__[0])')
+          # Testing the installed package requires moving out of the source
+          # directory.  There are problems with the pytest cache when trying
+          # to run from a non-writable dir.
+          cd ~
+          python -m pytest -v --cov=libstore --cov-report=xml ${PACKAGE_INSTALL_DIR}
+      - name: CodeCov
+        uses: codecov/codecov-action@v1
+        with:
+          file: ./coverage.xml
+          flags: unittests
+          name: codecov-${{ matrix.os }}-py${{ matrix.python-version }}-${{ matrix.env-type.env-type-name }}
