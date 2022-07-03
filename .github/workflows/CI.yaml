@@ -82,7 +82,7 @@ jobs:
           # directory.  There are problems with the pytest cache when trying
           # to run from a non-writable dir.
           cd ~
-          python -m pytest -v --cov=libstore --cov-report=xml ${PACKAGE_INSTALL_DIR}
+          python -m pytest -v --cov=cclib_custom --cov-report=xml ${PACKAGE_INSTALL_DIR}
       - name: CodeCov
         uses: codecov/codecov-action@v1
         with:
