@@ -1,10 +1,10 @@
-from cclib_custom.sandbox.polarizability_differences import QChemPolar
+from cclib_custom.sandbox.qchem_polar import QChemPolar
 from cclib_custom.tests import _testdatadir
 
 from cclib.io import ccopen
 
 
-def test_qchempolar() -> None:
+def test_qchem_polar() -> None:
     outputfile = _testdatadir / "Trp_bromine.out"
     assert outputfile.exists()
 
