@@ -33,14 +33,21 @@ class QChemALMOCIS(QChem, LogfileKeepall):
 
         self.matrix_headers = matrix_headers_1 + matrix_headers_2
 
-    def extract(self, inputfile, line):
+    def extract(self, inputfile, line: str) -> None:
         super().extract(inputfile, line)
 
         # check $rem for the local_cis option
         # 1 -> no RI (incorrect) version
         # 2 -> RI (correct) version
-        if "local_cis" in line:
-            self.set_attribute("local_cis", int(line.split()[-1]))
+        #
+        # This actually doesn't work, since this is a rem keyword, and the
+        # $rem section is parsed by the main QChem parser.  For things inside
+        # sections that are already parsed in parent parsers, if they call
+        # `next(inputfile)` over the line(s) of interest, there's no way to
+        # access it.
+        #
+        # if "local_cis" in line:
+        #     self.set_attribute("local_cis", int(line.split()[-1]))
 
         if any(line.strip() == x for x in self.matrix_headers):
             header = line.strip()

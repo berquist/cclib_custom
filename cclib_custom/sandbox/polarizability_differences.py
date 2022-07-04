@@ -7,6 +7,8 @@ np.set_printoptions(linewidth=200, formatter=formatter)  # type: ignore
 
 from cclib_custom import LogfileKeepall, ccDataKeepall
 
+import numpy.typing as npt
+
 # import pandas as pd
 # from cclib.io import ccopen
 from cclib.parser.qchemparser import QChem
@@ -16,23 +18,21 @@ class QChemPolar(QChem, LogfileKeepall):
     def __init__(self, *args, **kwargs):
         super().__init__(datatype=ccDataKeepall, future=True, *args, **kwargs)
 
-    def extract(self, inputfile, line):
+    def extract(self, inputfile, line: str) -> None:
         super().extract(inputfile, line)
 
         # Static polarizability from responseman/libresponse.
         if line.strip() == "Calculating the static polarizability using libresponse.":
-            if not hasattr(self, "polarizabilities"):
-                self.polarizabilities = []
             polarizability = []
             while line.strip() != "Static polarizability":
                 line = next(inputfile)
             for _ in range(3):
                 line = next(inputfile)
                 polarizability.append(line.split())
-            self.polarizabilities.append(np.array(polarizability))
+            self.append_attribute("polarizabilities", np.array(polarizability))
 
 
-def tensor_printer(tensor) -> None:
+def tensor_printer(tensor: npt.NDArray) -> None:
     assert len(tensor.shape) == 2
     assert tensor.shape[0] == tensor.shape[1]
     print(tensor)

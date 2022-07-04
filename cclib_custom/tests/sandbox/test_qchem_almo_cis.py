@@ -13,6 +13,7 @@ def test_qchem_almo_cis() -> None:
 
     # assert not hasattr(data_default, "etenergies")
     # assert not hasattr(data_default, "etoscs")
+    assert not hasattr(data_default, "local_cis")
     assert not hasattr(data_default, "matrices")
 
     job_almo = QChemALMOCIS(str(outputfile))
@@ -20,6 +21,8 @@ def test_qchem_almo_cis() -> None:
 
     # assert hasattr(data_almo, "etenergies")
     # assert hasattr(data_almo, "etoscs")
+    # assert hasattr(data_almo, "local_cis")
+    # assert data_almo.local_cis == 2
     assert hasattr(data_almo, "matrices")
     ref_keys = {
         "J using almo-motran",
