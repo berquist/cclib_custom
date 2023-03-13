@@ -104,7 +104,6 @@ class DALTONNMR(DALTON, LogfileKeepall):
             line = next(inputfile)
 
             for atomno in self.atomnos:
-
                 tensor = []
 
                 chomp_x = line.split()
@@ -291,7 +290,6 @@ class GaussianNMR(Gaussian, LogfileKeepall):
             self.nmr_shielding_tensors = []
             line = next(inputfile)
             for atomno in self.atomnos:
-
                 tensor = []
 
                 chomp_summary = line.split()
@@ -396,7 +394,6 @@ class NWChemNMR(NWChem, LogfileKeepall):
         super().extract(inputfile, line)
 
         if "Chemical Shielding Tensors (GIAO, in ppm)" in line:
-
             self.nmr_shielding_tensors = []
 
             for atomno in self.atomnos:
@@ -422,7 +419,6 @@ class ORCANMR(ORCA, LogfileKeepall):
         super().extract(inputfile, line)
 
         if "CHEMICAL SHIFTS" in line:
-
             self.nmr_shielding_tensors = []
 
             self.skip_lines(inputfile, ["d", "b"])
@@ -468,7 +464,6 @@ class ORCANMR(ORCA, LogfileKeepall):
             origin = np.array(line.split()[5:8], dtype=float)
 
         if "ELECTRONIC G-MATRIX" in line:
-
             self.skip_lines(inputfile, ["d", "b"])
             line = next(inputfile)
             assert line.strip() == "The g-matrix:"
@@ -558,7 +553,6 @@ class QChemNMR(QChem, LogfileKeepall):
             self.fockao.append(fockmat)
 
         if "NMR-SHIELDING TENSORS (SCF)" in line:
-
             self.nmr_shielding_tensors = []
 
             self.skip_lines(inputfile, ["h", "h", "b", "b"])
@@ -613,7 +607,6 @@ class QChemNMR(QChem, LogfileKeepall):
                 self.nmr_shielding_tensors.append(tensor)
 
         if "ELECTRONIC G-TENSOR" in line:
-
             self.skip_line(inputfile, "d")
             line = next(inputfile)
 
@@ -689,7 +682,7 @@ def parser_dispatch(outputfile):
         (ORCA, ORCANMR),
         (QChem, QChemNMR),
     )
-    for (program_type, parser_class) in program_types:
+    for program_type, parser_class in program_types:
         if isinstance(job, program_type):
             return parser_class
     return
@@ -710,7 +703,6 @@ def getargs():
 
 
 if __name__ == "__main__":
-
     args = getargs()
 
     for outputfilename in args.outputfilename:

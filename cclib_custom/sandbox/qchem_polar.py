@@ -42,7 +42,6 @@ def tensor_printer(tensor: npt.NDArray) -> None:
 
 
 if __name__ == "__main__":
-
     ions = (
         # 'fluorine',
         # 'chlorine',
@@ -65,7 +64,6 @@ if __name__ == "__main__":
     tensor_printer(polar_trp)
 
     for ion in ions:
-
         # job_ion = ccopen('{}.out'.format(ion))
         # job_super = ccopen('Trp_{}.out'.format(ion))
         job_ion = QChemPolar("{}.out".format(ion))

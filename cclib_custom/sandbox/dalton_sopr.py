@@ -169,7 +169,6 @@ class DALTONExt(DALTON, LogfileKeepall):
         )
 
     def extract(self, inputfile, line):
-
         if "Integrals of operator:" in line:
             matchline = "Integrals of operator:"
             if not hasattr(self, "AOPROPER"):
@@ -522,7 +521,7 @@ class DALTONExt(DALTON, LogfileKeepall):
         if hasattr(self, "propdict_lr"):
             propmap_angecc = {"XANGECC": 0, "YANGECC": 1, "ZANGECC": 2}
             self.proparr_angecc = np.zeros(shape=(3, 3))
-            for (lab1, lab2) in self.propdict_lr:
+            for lab1, lab2 in self.propdict_lr:
                 if "ANGECC" in lab1 and "ANGECC" in lab2:
                     r, c = propmap_angecc[lab1], propmap_angecc[lab2]
                     self.proparr_angecc[r, c] = self.proparr_angecc[c, r] = self.propdict_lr[
@@ -535,7 +534,7 @@ class DALTONExt(DALTON, LogfileKeepall):
             propmap_angmom = {"XANGMOM": 0, "YANGMOM": 1, "ZANGMOM": 2}
             propmap_1spnorb = {"X1SPNORB": 0, "Y1SPNORB": 1, "Z1SPNORB": 2}
             self.proparr_angmom_1spnorb = np.zeros(shape=(3, 3))
-            for (lab1, lab2) in self.propdict_lr:
+            for lab1, lab2 in self.propdict_lr:
                 if "ANGMOM" in lab1 and "1SPNORB" in lab2:
                     r, c = propmap_angmom[lab1], propmap_1spnorb[lab2]
                     self.proparr_angmom_1spnorb[r, c] = self.propdict_lr[(lab1, lab2)]
@@ -678,13 +677,13 @@ def repack_orb_to_dalton(A, norb, nclosed, nact, nvirt):
         len(indices_rohf_closed_act) + len(indices_rohf_closed_virt) + len(indices_rohf_act_virt)
     )
 
-    for (i, t) in indices_rohf_closed_act:
+    for i, t in indices_rohf_closed_act:
         it = (t - nclosed) * nclosed + i
         B[it] += A[i, t]
-    for (i, a) in indices_rohf_closed_virt:
+    for i, a in indices_rohf_closed_virt:
         ia = i * nvirt + a - nclosed - nact + (nclosed * nact)
         B[ia] += A[i, a]
-    for (t, a) in indices_rohf_act_virt:
+    for t, a in indices_rohf_act_virt:
         ta = (t - nclosed) * nvirt + a - nclosed - nact + (nclosed * nact) + (nclosed * nvirt)
         B[ta] += A[t, a]
 
@@ -692,7 +691,6 @@ def repack_orb_to_dalton(A, norb, nclosed, nact, nvirt):
 
 
 if __name__ == "__main__":
-
     args = getargs()
 
     logfile = DALTONExt(args.filename)

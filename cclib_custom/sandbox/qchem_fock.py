@@ -48,7 +48,6 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     for outputfilename in args.outputfilename:
-
         print(outputfilename)
         job = QChemFock(outputfilename)
         data = job.parse()
